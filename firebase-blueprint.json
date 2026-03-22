@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "Anamnesis": {
+      "title": "Anamnesis",
+      "description": "Stores the anamnesis form data and AI simulation results.",
+      "type": "object",
+      "properties": {
+        "nome": { "type": "string", "description": "Full name of the client" },
+        "idade": { "type": "integer", "description": "Age of the client" },
+        "email": { "type": "string", "format": "email", "description": "Email address" },
+        "cidade": { "type": "string", "description": "City in Maranhão" },
+        "peso": { "type": "string", "description": "Weight in kg" },
+        "procedimento": { "type": "string", "description": "Desired procedure" },
+        "doencas": { "type": "string", "description": "Medical conditions" },
+        "diabetes": { "type": "string", "description": "Diabetes status" },
+        "experiencia": { "type": "string", "description": "Previous aesthetic experience" },
+        "resultado": { "type": "string", "description": "Desired outcome" },
+        "preocupacao": { "type": "string", "description": "Main concern" },
+        "aiAnalise": { "type": "string", "description": "AI facial analysis text" },
+        "aiRecomendacaoPrincipais": { "type": "array", "items": { "type": "string" }, "description": "Top 3 recommended procedures" },
+        "aiRecomendacaoComplementares": { "type": "array", "items": { "type": "string" }, "description": "2 complementary procedures" },
+        "aiJustificativa": { "type": "string", "description": "Technical justification from AI" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of submission" },
+        "status": { "type": "string", "enum": ["pending", "contacted", "scheduled"], "description": "Lead status" }
+      },
+      "required": ["nome", "email", "procedimento", "createdAt"]
+    },
+    "SiteSettings": {
+      "title": "Site Settings",
+      "description": "Global settings for the site, like published status.",
+      "type": "object",
+      "properties": {
+        "isPublished": { "type": "boolean", "description": "Whether the site is published" },
+        "lastPublishedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last publication" },
+        "publicUrl": { "type": "string", "description": "The public URL of the site" }
+      },
+      "required": ["isPublished"]
+    }
+  },
+  "firestore": {
+    "/anamnesis/{anamnesisId}": {
+      "schema": "Anamnesis",
+      "description": "Collection of submitted anamnesis forms."
+    },
+    "/config/site_settings": {
+      "schema": "SiteSettings",
+      "description": "Global site configuration."
+    }
+  }
+}

@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: anamnesis
+    // Document ID: auto-generated
+    // Fields:
+    //   - nome: string (required, 1-100 chars)
+    //   - idade: number (required, 0-120)
+    //   - email: string (required, valid email)
+    //   - cidade: string (optional, 0-100 chars)
+    //   - peso: string (optional, 0-20 chars)
+    //   - procedimento: string (required, 1-100 chars)
+    //   - doencas: string (optional, 0-500 chars)
+    //   - diabetes: string (optional, 0-20 chars)
+    //   - experiencia: string (optional, 0-500 chars)
+    //   - resultado: string (optional, 0-500 chars)
+    //   - preocupacao: string (optional, 0-500 chars)
+    //   - aiAnalise: string (optional, 0-2000 chars)
+    //   - aiRecomendacaoPrincipais: list (optional, max 10 items)
+    //   - aiRecomendacaoComplementares: list (optional, max 10 items)
+    //   - aiJustificativa: string (optional, 0-2000 chars)
+    //   - createdAt: timestamp (required)
+    //   - status: string (optional, enum: pending, contacted, scheduled)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "karenjullia067@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidEmail(email) {
+      return email is string &&
+        email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidAnamnesis(data) {
+      return data.keys().hasAll(['nome', 'email', 'procedimento', 'createdAt']) &&
+        data.nome is string && data.nome.size() > 0 && data.nome.size() <= 100 &&
+        isValidEmail(data.email) &&
+        data.procedimento is string && data.procedimento.size() > 0 && data.procedimento.size() <= 100 &&
+        data.createdAt is timestamp &&
+        (!('idade' in data) || (data.idade is int && data.idade >= 0 && data.idade <= 120)) &&
+        (!('cidade' in data) || (data.cidade is string && data.cidade.size() <= 100)) &&
+        (!('peso' in data) || (data.peso is string && data.peso.size() <= 20)) &&
+        (!('doencas' in data) || (data.doencas is string && data.doencas.size() <= 500)) &&
+        (!('diabetes' in data) || (data.diabetes is string && data.diabetes.size() <= 20)) &&
+        (!('experiencia' in data) || (data.experiencia is string && data.experiencia.size() <= 500)) &&
+        (!('resultado' in data) || (data.resultado is string && data.resultado.size() <= 500)) &&
+        (!('preocupacao' in data) || (data.preocupacao is string && data.preocupacao.size() <= 500)) &&
+        (!('aiAnalise' in data) || (data.aiAnalise is string && data.aiAnalise.size() <= 2000)) &&
+        (!('aiRecomendacaoPrincipais' in data) || (data.aiRecomendacaoPrincipais is list && data.aiRecomendacaoPrincipais.size() <= 10)) &&
+        (!('aiRecomendacaoComplementares' in data) || (data.aiRecomendacaoComplementares is list && data.aiRecomendacaoComplementares.size() <= 10)) &&
+        (!('aiJustificativa' in data) || (data.aiJustificativa is string && data.aiJustificativa.size() <= 2000)) &&
+        (!('status' in data) || (data.status in ['pending', 'contacted', 'scheduled']));
+    }
+
+    match /anamnesis/{anamnesisId} {
+      // Allow creation by anyone (lead form) - but we'll validate the data
+      // Actually, instructions say "always require authentication for any access to data"
+      // So I'll require authentication for create too.
+      allow create: if isAuthenticated() && isValidAnamnesis(request.resource.data);
+      
+      // Only admins can read, list, update or delete anamnesis
+      allow read, list, update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create, update: if isAdmin();
+    }
+
+    match /config/site_settings {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
