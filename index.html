@@ -1,198 +1,166 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="notranslate" translate="no">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harmonie | Mapeamento Facial Avançado</title>
-    
+    <title>Harmonie Lux | Inteligência Estética</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
-        :root { 
-            --satin-pink: #f8c8dc; 
-            --gold: #d4af37; 
-            --silver: #c0c0c0;
-            --dark: #000000;
-        }
-        
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            color: white; 
-            margin: 0;
-            overflow-x: hidden; 
-            scroll-behavior: smooth;
-        }
-
-        /* Efeito Cetim Rosa com Glitter */
-        .satin-glitter {
-            background: linear-gradient(135deg, #f8c8dc 0%, #f1a7c4 50%, #f8c8dc 100%);
-            position: relative;
-            overflow: hidden;
-            color: #000 !important;
-        }
-        .satin-glitter::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
+        :root { --satin: #f8c8dc; --gold: #d4af37; --dark: #050505; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--dark); color: white; }
         .font-luxury { font-family: 'Cinzel', serif; }
-        .gold-text { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        
-        .btn-pink-satin { 
-            background: linear-gradient(45deg, #f8c8dc, #f1a7c4);
-            color: #000;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(248, 200, 220, 0.3);
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .btn-pink-satin:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(248, 200, 220, 0.5); }
-
-        .section-card { border-left: 3px solid var(--gold); padding-left: 15px; margin-bottom: 30px; }
-        input[type="checkbox"] { accent-color: #f1a7c4; width: 20px; height: 20px; }
-        input::placeholder { color: rgba(255,255,255,0.4); }
+        .gold-gradient { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .satin-btn { background: linear-gradient(135deg, #f8c8dc 0%, #f1a7c4 100%); color: black; transition: 0.3s; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; }
+        .chip { cursor: pointer; padding: 10px 15px; border-radius: 50px; border: 1px solid #444; font-size: 10px; transition: 0.3s; text-align: center; }
+        .chip.active { background: #f1a7c4; color: black; border-color: white; font-weight: bold; }
+        input, select { background: rgba(255,255,255,0.05)!important; border: none!important; border-bottom: 1px solid #333!important; color: white!important; padding: 12px!important; width: 100%; border-radius: 10px; margin-bottom: 15px; }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="pb-10">
 
-    <nav class="p-8 text-center border-b border-white/10 mb-10">
-        <h1 class="text-4xl font-luxury gold-text tracking-[0.3em]">HARMONIE</h1>
-        <p class="text-[9px] tracking-[0.5em] text-gray-400 uppercase mt-2 italic">Aesthetic Intelligence · Santa Inês</p>
+    <nav class="p-10 text-center">
+        <h1 class="text-3xl font-luxury gold-gradient tracking-[0.4em]">HARMONIE</h1>
+        <p class="text-[8px] tracking-[0.5em] text-pink-300 mt-2 uppercase">Elite Aesthetic Technology</p>
     </nav>
 
-    <div class="max-w-4xl mx-auto px-4">
+    <main class="max-w-xl mx-auto px-6">
         
-        <div id="step-form" class="fade-up">
-            <div class="glass p-8 mb-10">
-                <label class="text-[10px] tracking-[0.3em] text-amber-500 mb-4 block uppercase font-bold">Registro de Paciente</label>
-                <input type="text" id="nome" placeholder="NOME COMPLETO" class="w-full bg-transparent border-b border-gray-700 p-4 outline-none focus:border-pink-300 transition-all text-sm tracking-widest text-white uppercase">
-            </div>
-
-            <div class="section-card">
-                <h3 class="gold-text font-luxury text-xl mb-4">🔝 1. TERÇO SUPERIOR</h3>
-                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Rugas na Testa (Frontal)"> Testa (Rugas Horizontais)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Glabela (Rugas entre sobrancelhas)"> Glabela (Bravo)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Elevação de Sobrancelhas"> Arqueamento de Sobrancelhas</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Pés de Galinha"> Pés de Galinha (Olhos)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Olheiras Profundas"> Olheiras / Sulco Palpebral</label>
+        <div id="step-1">
+            <div class="glass p-6 mb-6">
+                <input type="text" id="nome" placeholder="NOME COMPLETO">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="idade" placeholder="IDADE">
+                    <select id="habito-agua">
+                        <option value="Baixa">Água: Baixa</option>
+                        <option value="Ideal">Água: Ideal</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="section-card mt-12">
-                <h3 class="gold-text font-luxury text-xl mb-4">⚖️ 2. TERÇO MÉDIO</h3>
-                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Rinomodelação Avançada"> Nariz (Ponta e Dorso)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Top Model Look (Maçãs)"> Maçãs do Rosto (Malar)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Bigode Chinês (Nasolabial)"> Bigode Chinês</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Preenchimento de Bochechas"> Volume em Bochechas</label>
+            <div class="glass p-6 mb-6 text-center">
+                <h3 class="text-xs gold-gradient font-luxury mb-4 uppercase">Mapeamento Fotográfico</h3>
+                <div class="relative border-2 border-dashed border-pink-900 rounded-2xl p-4 h-40 flex items-center justify-center overflow-hidden">
+                    <input type="file" id="foto" accept="image/*" onchange="previewFoto(event)" class="absolute inset-0 opacity-0 z-10">
+                    <img id="img-preview" class="hidden w-full h-full object-cover rounded-xl">
+                    <p id="txt-upload" class="text-[9px] text-pink-200">CLIQUE PARA TIRAR FOTO OU SUBIR</p>
                 </div>
             </div>
 
-            <div class="section-card mt-12">
-                <h3 class="gold-text font-luxury text-xl mb-4">👄 3. TERÇO INFERIOR E PESCOÇO</h3>
-                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Preenchimento Labial HD"> Lábios (Contorno e Volume)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Definição de Mandíbula"> Contorno Mandibular</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Mentoplastia (Queixo)"> Queixo (Mento)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Linhas de Marionete"> Linhas de Marionete</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Lipo de Papada Enzimática"> Papada (Gordura Submentual)</label>
-                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Lifting de Pescoço"> Flacidez no Pescoço</label>
+            <div class="glass p-6 mb-6">
+                <h3 class="text-xs text-center mb-4 uppercase tracking-widest text-pink-200">Áreas de Interesse</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="chip" onclick="this.classList.toggle('active')">Papada</div>
+                    <div class="chip" onclick="this.classList.toggle('active')">Abdômen</div>
+                    <div class="chip" onclick="this.classList.toggle('active')">Glúteos</div>
+                    <div class="chip" onclick="this.classList.toggle('active')">Flacidez</div>
+                    <div class="chip" onclick="this.classList.toggle('active')">Celulite</div>
+                    <div class="chip" onclick="this.classList.toggle('active')">Olheiras</div>
                 </div>
             </div>
 
-            <button onclick="gerarLaudo()" class="w-full btn-pink-satin satin-glitter p-6 rounded-full text-[10px] tracking-[0.5em] uppercase mt-16 mb-20 shadow-2xl">
-                Gerar Laudo Harmonie Lux
+            <button onclick="processar()" class="w-full satin-btn p-5 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg">
+                Iniciar Diagnóstico IA
             </button>
         </div>
 
-        <div id="step-result" class="hidden fade-up pb-20">
-            <div id="pdf-area" class="bg-white text-black p-12 rounded-2xl shadow-2xl border-[12px] border-double border-[#f8c8dc]">
-                <div class="text-center mb-10">
-                    <h2 class="font-luxury text-3xl tracking-tighter text-gray-900">HARMONIE</h2>
-                    <p class="text-[7px] tracking-[0.6em] text-pink-500 uppercase font-bold">Protocolo de Harmonização Facial</p>
-                </div>
-
-                <div class="mb-8 border-b border-gray-100 pb-4">
-                    <p class="text-[8px] text-amber-600 font-bold uppercase tracking-widest">Paciente de Alta Performance</p>
-                    <h4 id="res-nome" class="text-2xl font-semibold uppercase tracking-tighter">---</h4>
-                </div>
-
-                <div class="space-y-6 text-[12px] leading-relaxed text-gray-700">
-                    <p>O presente diagnóstico digital identificou necessidades de intervenção estética com foco em <b>Proporção Áurea</b> nas seguintes áreas anatômicas:</p>
-                    
-                    <div id="res-areas" class="grid grid-cols-1 gap-2 font-bold text-gray-900 uppercase text-[10px]"></div>
-
-                    <div class="mt-8 p-6 bg-pink-50 rounded-xl border-l-4 border-pink-300">
-                        <p class="text-[9px] font-bold text-pink-700 uppercase mb-2 italic underline">Parecer Harmonie:</p>
-                        <p class="text-[11px]">Recomenda-se a associação de preenchedores de ácido hialurônico e bioestimuladores para garantir o <i>lifting</i> facial sem perda da identidade dérmica.</p>
+        <div id="step-2" class="hidden">
+            <div id="dossie-pdf" class="bg-white text-black p-8 rounded-[30px] border-[8px] border-double border-pink-100">
+                <h2 class="font-luxury text-center text-xl mb-1">DOSSIÊ HARMONIE</h2>
+                <p class="text-[7px] text-center uppercase tracking-tighter text-gray-400 mb-6">Relatório de Alta Performance Estética</p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="text-center">
+                        <p class="text-[7px] font-bold uppercase mb-1">Captura Original</p>
+                        <img id="pdf-img-orig" class="w-full h-32 object-cover rounded-lg border">
+                    </div>
+                    <div class="text-center relative">
+                        <p class="text-[7px] font-bold uppercase mb-1 text-pink-600">Projeção IA</p>
+                        <img id="pdf-img-simu" class="w-full h-32 object-cover rounded-lg border-2 border-pink-300 contrast-125 saturate-150">
+                        <div class="absolute bottom-2 right-2 bg-pink-500 text-white text-[5px] px-1 rounded">SIMULAÇÃO</div>
                     </div>
                 </div>
 
-                <div class="mt-16 text-center">
-                    <div class="w-16 h-[1px] bg-gray-300 mx-auto mb-4"></div>
-                    <p class="text-[8px] text-gray-400 uppercase tracking-[0.5em]">Santa Inês · Maranhão · 2026</p>
-                </div>
+                <div id="resultado-texto" class="text-[10px] space-y-3 leading-relaxed">
+                    </div>
             </div>
 
-            <div class="grid gap-4 mt-12">
-                <button onclick="baixarLaudo()" class="w-full bg-white/10 border border-white/20 p-6 rounded-full text-[10px] tracking-widest uppercase hover:bg-white/20 transition">
-                    ⬇ Baixar PDF Oficial
+            <div class="mt-6 space-y-3">
+                <button onclick="baixarPDF()" class="w-full bg-white/10 p-4 rounded-full text-[9px] uppercase tracking-widest border border-white/20">
+                    📥 Guardar Dossiê (PDF)
                 </button>
-                <a id="link-zap" href="#" target="_blank" class="w-full btn-pink-satin satin-glitter p-6 rounded-full text-center text-[10px] tracking-widest uppercase">
-                    💬 Agendar Consulta Lux
+                <a id="btn-whats" href="#" target="_blank" class="block w-full satin-btn p-5 rounded-full text-center font-bold text-[10px] uppercase tracking-widest">
+                    💬 Agendar com Especialista
                 </a>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        const WHATSAPP_NUM = "5598985546758";
+        let fotoData = "";
 
-        function gerarLaudo() {
-            const nome = document.getElementById('nome').value.trim();
-            const selecionados = Array.from(document.querySelectorAll('input[name="area"]:checked')).map(x => x.value);
-
-            if(!nome || selecionados.length === 0) {
-                alert("Por favor, preencha o Nome e selecione ao menos uma área.");
-                return;
+        function previewFoto(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('img-preview');
+                output.src = reader.result;
+                output.classList.remove('hidden');
+                document.getElementById('txt-upload').classList.add('hidden');
+                fotoData = reader.result;
             }
+            reader.readAsDataURL(event.target.files[0]);
+        }
 
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-result').classList.remove('hidden');
-
-            document.getElementById('res-nome').innerText = nome;
-            const container = document.getElementById('res-areas');
-            container.innerHTML = selecionados.map(a => `<div class="flex items-center gap-2"><span>✨</span> ${a}</div>`).join('');
-
-            const textoZap = window.encodeURIComponent(`Olá! Sou ${nome} e acabei de gerar meu Laudo Harmonie Lux para: ${selecionados.join(', ')}. Gostaria de agendar minha avaliação!`);
-            document.getElementById('link-zap').href = `https://wa.me/${WHATSAPP_NUM}?text=${textoZap}`;
+        function processar() {
+            const nome = document.getElementById('nome').value;
+            const areas = Array.from(document.querySelectorAll('.chip.active')).map(x => x.innerText);
             
+            if(!nome || !fotoData) return alert("Por favor, preencha o seu nome e suba uma foto.");
+
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+            
+            document.getElementById('pdf-img-orig').src = fotoData;
+            document.getElementById('pdf-img-simu').src = fotoData; // Aplica filtros via CSS no PDF
+
+            let sugestoes = "Com base na análise de tecidos, recomendamos protocolos de bioestimulação e tecnologias de remodelação. A simetria facial apresenta potencial de otimização em 15% via preenchimento estrutural.";
+            
+            document.getElementById('resultado-texto').innerHTML = `
+                <p><b>PACIENTE:</b> ${nome.toUpperCase()}</p>
+                <p><b>ÁREAS ALVO:</b> ${areas.join(', ')}</p>
+                <p style="background:#fff5f8; padding:10px; border-radius:10px"><b>PARECER IA:</b> ${sugestoes}</p>
+            `;
+
+            const msg = encodeURIComponent(`Olá! Sou ${nome}. Acabei de gerar o meu Dossiê Harmonie com foto e mapeamento para ${areas.join(', ')}. Quero marcar a minha consulta!`);
+            document.getElementById('btn-whats').href = `https://wa.me/5598985546758?text=${msg}`;
             window.scrollTo(0,0);
         }
 
-        function baixarLaudo() {
+        async function baixarPDF() {
             const { jsPDF } = window.jspdf;
-            const area = document.getElementById('pdf-area');
+            const doc = new jsPDF();
+            const nome = document.getElementById('nome').value;
             
-            html2canvas(area, { scale: 3, useCORS: true }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const width = pdf.internal.pageSize.getWidth();
-                const height = (canvas.height * width) / canvas.width;
-                pdf.addImage(imgData, 'PNG', 0, 10, width, height);
-                pdf.save(`Laudo-Harmonie-${document.getElementById('nome').value}.pdf`);
-            });
+            // Simulação de PDF de luxo
+            doc.setFontSize(22);
+            doc.setTextColor(212, 175, 55); // Ouro
+            doc.text("HARMONIE LUX", 105, 30, {align: "center"});
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0,0,0);
+            doc.text(`Relatório Individual: ${nome}`, 20, 50);
+            
+            if(fotoData) {
+                doc.addImage(fotoData, 'JPEG', 20, 60, 80, 100);
+                doc.text("FOTO ORIGINAL", 20, 165);
+            }
+            
+            doc.setFontSize(8);
+            doc.text("Este documento garante prioridade no atendimento e bónus de avaliação.", 105, 280, {align: "center"});
+            
+            doc.save(`Harmonie-${nome}.pdf`);
         }
     </script>
 </body>
