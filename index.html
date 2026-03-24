@@ -56,4 +56,144 @@
             font-weight: 700;
             cursor: pointer;
         }
-        .btn-pink-satin:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(248, 200, 220,
+        .btn-pink-satin:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(248, 200, 220, 0.5); }
+
+        .section-card { border-left: 3px solid var(--gold); padding-left: 15px; margin-bottom: 30px; }
+        input[type="checkbox"] { accent-color: #f1a7c4; width: 20px; height: 20px; }
+        input::placeholder { color: rgba(255,255,255,0.4); }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+
+    <nav class="p-8 text-center border-b border-white/10 mb-10">
+        <h1 class="text-4xl font-luxury gold-text tracking-[0.3em]">HARMONIE</h1>
+        <p class="text-[9px] tracking-[0.5em] text-gray-400 uppercase mt-2 italic">Aesthetic Intelligence · Santa Inês</p>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4">
+        
+        <div id="step-form" class="fade-up">
+            <div class="glass p-8 mb-10">
+                <label class="text-[10px] tracking-[0.3em] text-amber-500 mb-4 block uppercase font-bold">Registro de Paciente</label>
+                <input type="text" id="nome" placeholder="NOME COMPLETO" class="w-full bg-transparent border-b border-gray-700 p-4 outline-none focus:border-pink-300 transition-all text-sm tracking-widest text-white uppercase">
+            </div>
+
+            <div class="section-card">
+                <h3 class="gold-text font-luxury text-xl mb-4">🔝 1. TERÇO SUPERIOR</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Rugas na Testa (Frontal)"> Testa (Rugas Horizontais)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Glabela (Rugas entre sobrancelhas)"> Glabela (Bravo)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Elevação de Sobrancelhas"> Arqueamento de Sobrancelhas</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Pés de Galinha"> Pés de Galinha (Olhos)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Olheiras Profundas"> Olheiras / Sulco Palpebral</label>
+                </div>
+            </div>
+
+            <div class="section-card mt-12">
+                <h3 class="gold-text font-luxury text-xl mb-4">⚖️ 2. TERÇO MÉDIO</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Rinomodelação Avançada"> Nariz (Ponta e Dorso)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Top Model Look (Maçãs)"> Maçãs do Rosto (Malar)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Bigode Chinês (Nasolabial)"> Bigode Chinês</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Preenchimento de Bochechas"> Volume em Bochechas</label>
+                </div>
+            </div>
+
+            <div class="section-card mt-12">
+                <h3 class="gold-text font-luxury text-xl mb-4">👄 3. TERÇO INFERIOR E PESCOÇO</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-[10px] tracking-widest uppercase">
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Preenchimento Labial HD"> Lábios (Contorno e Volume)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Definição de Mandíbula"> Contorno Mandibular</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Mentoplastia (Queixo)"> Queixo (Mento)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Linhas de Marionete"> Linhas de Marionete</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Lipo de Papada Enzimática"> Papada (Gordura Submentual)</label>
+                    <label class="flex items-center gap-3 p-4 glass cursor-pointer hover:bg-white/5"><input type="checkbox" name="area" value="Lifting de Pescoço"> Flacidez no Pescoço</label>
+                </div>
+            </div>
+
+            <button onclick="gerarLaudo()" class="w-full btn-pink-satin satin-glitter p-6 rounded-full text-[10px] tracking-[0.5em] uppercase mt-16 mb-20 shadow-2xl">
+                Gerar Laudo Harmonie Lux
+            </button>
+        </div>
+
+        <div id="step-result" class="hidden fade-up pb-20">
+            <div id="pdf-area" class="bg-white text-black p-12 rounded-2xl shadow-2xl border-[12px] border-double border-[#f8c8dc]">
+                <div class="text-center mb-10">
+                    <h2 class="font-luxury text-3xl tracking-tighter text-gray-900">HARMONIE</h2>
+                    <p class="text-[7px] tracking-[0.6em] text-pink-500 uppercase font-bold">Protocolo de Harmonização Facial</p>
+                </div>
+
+                <div class="mb-8 border-b border-gray-100 pb-4">
+                    <p class="text-[8px] text-amber-600 font-bold uppercase tracking-widest">Paciente de Alta Performance</p>
+                    <h4 id="res-nome" class="text-2xl font-semibold uppercase tracking-tighter">---</h4>
+                </div>
+
+                <div class="space-y-6 text-[12px] leading-relaxed text-gray-700">
+                    <p>O presente diagnóstico digital identificou necessidades de intervenção estética com foco em <b>Proporção Áurea</b> nas seguintes áreas anatômicas:</p>
+                    
+                    <div id="res-areas" class="grid grid-cols-1 gap-2 font-bold text-gray-900 uppercase text-[10px]"></div>
+
+                    <div class="mt-8 p-6 bg-pink-50 rounded-xl border-l-4 border-pink-300">
+                        <p class="text-[9px] font-bold text-pink-700 uppercase mb-2 italic underline">Parecer Harmonie:</p>
+                        <p class="text-[11px]">Recomenda-se a associação de preenchedores de ácido hialurônico e bioestimuladores para garantir o <i>lifting</i> facial sem perda da identidade dérmica.</p>
+                    </div>
+                </div>
+
+                <div class="mt-16 text-center">
+                    <div class="w-16 h-[1px] bg-gray-300 mx-auto mb-4"></div>
+                    <p class="text-[8px] text-gray-400 uppercase tracking-[0.5em]">Santa Inês · Maranhão · 2026</p>
+                </div>
+            </div>
+
+            <div class="grid gap-4 mt-12">
+                <button onclick="baixarLaudo()" class="w-full bg-white/10 border border-white/20 p-6 rounded-full text-[10px] tracking-widest uppercase hover:bg-white/20 transition">
+                    ⬇ Baixar PDF Oficial
+                </button>
+                <a id="link-zap" href="#" target="_blank" class="w-full btn-pink-satin satin-glitter p-6 rounded-full text-center text-[10px] tracking-widest uppercase">
+                    💬 Agendar Consulta Lux
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WHATSAPP_NUM = "5598985546758";
+
+        function gerarLaudo() {
+            const nome = document.getElementById('nome').value.trim();
+            const selecionados = Array.from(document.querySelectorAll('input[name="area"]:checked')).map(x => x.value);
+
+            if(!nome || selecionados.length === 0) {
+                alert("Por favor, preencha o Nome e selecione ao menos uma área.");
+                return;
+            }
+
+            document.getElementById('step-form').classList.add('hidden');
+            document.getElementById('step-result').classList.remove('hidden');
+
+            document.getElementById('res-nome').innerText = nome;
+            const container = document.getElementById('res-areas');
+            container.innerHTML = selecionados.map(a => `<div class="flex items-center gap-2"><span>✨</span> ${a}</div>`).join('');
+
+            const textoZap = window.encodeURIComponent(`Olá! Sou ${nome} e acabei de gerar meu Laudo Harmonie Lux para: ${selecionados.join(', ')}. Gostaria de agendar minha avaliação!`);
+            document.getElementById('link-zap').href = `https://wa.me/${WHATSAPP_NUM}?text=${textoZap}`;
+            
+            window.scrollTo(0,0);
+        }
+
+        function baixarLaudo() {
+            const { jsPDF } = window.jspdf;
+            const area = document.getElementById('pdf-area');
+            
+            html2canvas(area, { scale: 3, useCORS: true }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const width = pdf.internal.pageSize.getWidth();
+                const height = (canvas.height * width) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 10, width, height);
+                pdf.save(`Laudo-Harmonie-${document.getElementById('nome').value}.pdf`);
+            });
+        }
+    </script>
+</body>
+</html>
